@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './operations';
+import Notiflix from 'notiflix';
 
 const handlePending = state => {
   state.isLoading = true;
+  Notiflix.Loading.standard('Loading...');
 };
 
 const handleRejected = (state, action) => {
@@ -24,6 +26,7 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.contacts = action.payload;
+      Notiflix.Loading.remove();
     },
     [fetchContacts.rejected]: handleRejected,
     [addContact.pending]: handlePending,
@@ -31,6 +34,7 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.contacts.push(action.payload);
+      Notiflix.Loading.remove();
     },
     [addContact.rejected]: handleRejected,
     [deleteContact.pending]: handlePending,
@@ -40,6 +44,7 @@ const contactsSlice = createSlice({
       state.contacts = state.contacts.filter(
         contact => contact.id !== action.payload.id
       );
+      Notiflix.Loading.remove();
     },
     [deleteContact.rejected]: handleRejected,
   },

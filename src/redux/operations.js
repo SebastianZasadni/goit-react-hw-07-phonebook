@@ -11,20 +11,20 @@ export const fetchContacts = createAsyncThunk(
       const response = await axios.get('/contacts');
       return response.data;
     } catch (e) {
-      return Notiflix.Notify.failure(thunkAPI.rejectWithValue(e.message));
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async ({name, number}, thunkAPI) => {
+  async ({ name, number }, thunkAPI) => {
     try {
-      const response = await axios.post('/contacts', {name, number });
+      const response = await axios.post('/contacts', { name, number });
       Notiflix.Notify.success('Succesfuly added contacts.');
       return response.data;
     } catch (e) {
-      return Notiflix.Notify.failure(thunkAPI.rejectWithValue(e.message));
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
@@ -34,10 +34,10 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const response = await axios.delete(`/contacts/${contactId}`);
-      Notiflix.Notify.success('Succesfuly deleted contact.');
+      Notiflix.Notify.success('Succesfuly contact deleted.');
       return response.data;
     } catch (e) {
-      return Notiflix.Notify.failure(thunkAPI.rejectWithValue(e.message));
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
