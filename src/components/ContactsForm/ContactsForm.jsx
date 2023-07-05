@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid';
+import Notiflix from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import { selectContacts } from 'redux/selectors';
 import css from './ContactsForm.module.css';
 
@@ -13,11 +13,10 @@ export const ContactsForm = () => {
     const form = evt.target;
     const name = form.elements.name.value;
     const number = form.elements.number.value;
-    const contact = { id: nanoid(), name: name, number: number };
-    contacts.some(contact => contact.name === name)
-      ? alert('You already have this contact.')
-      : dispatch(addContact(contact));
 
+    contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())
+      ? Notiflix.Notify.warning('You already have this contact.')
+      : dispatch(addContact({ name, number }));
     form.reset();
   };
 
