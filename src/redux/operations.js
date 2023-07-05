@@ -34,7 +34,7 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const response = await axios.delete(`/contacts/${contactId}`);
-      Notiflix.Notify.success('Succesfuly contact deleted.');
+      Notiflix.Notify.success('Succesfuly deleted contact.');
       return response.data;
     } catch (e) {
       return Notiflix.Notify.failure(thunkAPI.rejectWithValue(e.message));
